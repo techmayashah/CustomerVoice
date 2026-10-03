@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gallery Voice – Customer Sentiment for Vitrified Tiles Gallery</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{--bg:#f1f3f2;--surf:#fff;--ink:#1d2a2e;--mut:#5d6b70;--line:#d5dbd9;--pos:#0e7a6e;--neu:#b9821a;--neg:#b13a2c;--acc:#0e5c63;--onacc:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12191b;--surf:#1a2427;--ink:#e6eeee;--mut:#93a3a6;--line:#2c3a3d;--pos:#3cc2ae;--neu:#e0a83a;--neg:#ee7a68;--acc:#5cc0c8;--onacc:#0b1416}}
+:root[data-theme="dark"]{--bg:#12191b;--surf:#1a2427;--ink:#e6eeee;--mut:#93a3a6;--line:#2c3a3d;--pos:#3cc2ae;--neu:#e0a83a;--neg:#ee7a68;--acc:#5cc0c8;--onacc:#0b1416}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "Source Sans 3",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;margin:0;line-height:1.15}
+header{max-width:960px;margin:0 auto;padding:24px 16px 8px;display:flex;flex-wrap:wrap;gap:12px;align-items:end;justify-content:space-between}
+header h1{font-size:clamp(26px,5vw,38px)}
+header p{margin:4px 0 0;color:var(--mut);max-width:46ch}
+nav{display:flex;gap:4px;background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:4px}
+nav button{border:0;background:none;color:var(--mut);font:600 15px "Source Sans 3",sans-serif;padding:8px 14px;border-radius:7px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--acc);color:var(--onacc)}
+main{max-width:960px;margin:0 auto;padding:12px 16px 48px}
+button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:16px}
+.q h3{font-size:19px}.q p{margin:4px 0 14px;color:var(--mut);font-size:15px}
+.tag{font-size:13px;color:var(--acc);font-weight:600;margin-bottom:6px}
+.tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.tiles button{aspect-ratio:1/1;max-height:92px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font:600 12px "Source Sans 3",sans-serif;padding:2px}
+.tiles button span{font-size:26px;line-height:1}
+.tiles button[aria-pressed="true"]{background:var(--acc);color:var(--onacc);border-color:var(--acc)}
+textarea{width:100%;min-height:96px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit;padding:10px;resize:vertical}
+.btn{border:0;background:var(--acc);color:var(--onacc);font:600 16px "Source Sans 3",sans-serif;padding:12px 22px;border-radius:8px;cursor:pointer}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--line);padding:8px 14px;font-size:14px}
+.err{color:var(--neg);margin:8px 0 0;min-height:1.4em;font-size:15px}
+.bar{display:flex;align-items:center;gap:10px;margin:10px 0;font-size:15px}
+.bar .n{width:130px;flex:none}.bar .tr{flex:1;height:14px;background:var(--bg);border-radius:3px;overflow:hidden;border:1px solid var(--line)}
+.bar .f{height:100%}.bar .v{width:44px;text-align:right;font-weight:600}
+.mosaic{display:flex;flex-wrap:wrap;gap:4px;margin:12px 0}
+.mosaic i{width:26px;height:26px;border-radius:3px;display:block}
+.p{background:var(--pos)}.u{background:var(--neu)}.m{background:var(--neg)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:14px;color:var(--mut)}
+.legend b{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.head{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:baseline;justify-content:space-between}
+.head h2{font-size:22px}
+.net{font:700 15px "Bricolage Grotesque",sans-serif}
+ul.ins{margin:8px 0 0;padding-left:20px}ul.ins li{margin:8px 0}
+.row{border-top:1px solid var(--line);padding:12px 0}.row:first-child{border-top:0}
+.pill{display:inline-block;font-size:13px;font-weight:600;padding:1px 9px;border-radius:99px;color:#fff;margin-right:8px}
+.pill.p{background:var(--pos)}.pill.u{background:var(--neu)}.pill.m{background:var(--neg)}
+:root[data-theme="dark"] .pill,:root:not([data-theme="light"]) .pill{color:#0b1416}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .pill{color:#fff}}
+.sm{font-size:14px;color:var(--mut)}
+.th{display:grid;grid-template-columns:110px 1fr 1fr;gap:8px;font-size:15px;align-items:center;margin:6px 0}
+.th .c{height:12px;background:var(--bg);border-radius:3px;position:relative;overflow:hidden}
+.th .c u{position:absolute;top:0;bottom:0;text-decoration:none}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.empty{color:var(--mut);padding:8px 0}
+.hide{display:none}
+@media (max-width:480px){.bar .n{width:96px}.th{grid-template-columns:84px 1fr 1fr}.tiles button{font-size:11px}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Gallery Voice</h1>
+    <p>Five quick questions about your visit to our vitrified tiles gallery.</p>
+  </div>
+  <nav role="tablist">
+    <button role="tab" id="t1" aria-selected="true">Customer survey</button>
+    <button role="tab" id="t2" aria-selected="false">Manager view</button>
+  </nav>
+</header>
+<main>
+  <section id="survey"></section>
+  <section id="manager" class="hide"></section>
+</main>
+<script>
+const Q=[
+ {k:'visit',n:'Store visit',q:'How was your overall experience visiting our gallery today?',h:'Layout, tile displays, cleanliness and finding what you wanted.'},
+ {k:'staff',n:'Staff interaction',q:'How helpful and polite was our team when you needed guidance?',h:'Greeting, listening and product knowledge.'},
+ {k:'product',n:'Tile quality & range',q:'How satisfied are you with our tile quality, designs and variety?',h:'Finish, colour, sizes and the choice available.'},
+ {k:'service',n:'Service quality',q:'How was our service on samples, pricing clarity, delivery and after-sales?',h:'Quotes, sample hand-out, timelines and follow-up.'}
+];
+const FACE=['😠','🙁','😐','🙂','😍'],LBL=['Very poor','Poor','Okay','Good','Excellent'];
+const POS='good great excellent amazing beautiful love loved lovely helpful polite friendly quick fast clean best nice wonderful happy satisfied perfect professional spacious variety affordable smooth recommend awesome superb courteous knowledgeable patient responsive'.split(' ');
+const NEG='bad poor worst rude slow late delay delayed expensive costly dirty confusing crowded broken chipped damaged damage disappointed disappointing unhelpful ignored wait waiting limited pathetic terrible horrible overpriced mismatch complaint problem issue uncomfortable cluttered'.split(' ');
+const NOT=['not','no','never','hardly',"isn't","wasn't","don't","didn't","wasnt","isnt","dont","didnt"];
+const TH={Staff:'staff sales salesman salesperson executive team behaviour behavior attitude guidance',Tiles:'tile tiles design designs quality finish colour color variety range size sizes shade',Price:'price pricing expensive costly cheap discount offer rate value overpriced affordable',Delivery:'delivery late delay delayed transport damage damaged breakage',Store:'store gallery display showroom parking crowded clean space lighting ambience',Service:'service sample samples warranty return billing waiting wait quotation followup'};
+const THK=Object.keys(TH).reduce((o,k)=>{TH[k].split(' ').forEach(w=>(o[w]=o[w]||[]).push(k));return o},{});
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let mem=[];
+const load=()=>{try{return JSON.parse(localStorage.getItem('gv-data')||'[]')}catch(e){return mem}};
+const save=d=>{mem=d;try{localStorage.setItem('gv-data',JSON.stringify(d))}catch(e){}};
+let data=load(),ans={};
+
+function analyseText(t){
+  if(!t||!t.trim())return{t:null,themes:{}};
+  let P=0,N=0,themes={};
+  t.toLowerCase().split(/[.!?;,\n]|\bbut\b|\bhowever\b/).forEach(cl=>{
+    const w=cl.match(/[a-z']+/g)||[];let p=0,n=0;
+    w.forEach((x,i)=>{
+      const neg=NOT.includes(w[i-1])||NOT.includes(w[i-2]);
+      if(POS.includes(x)){neg?n++:p++}else if(NEG.includes(x)){neg?p++:n++}
+    });
+    P+=p;N+=n;
+    const pol=p>n?1:n>p?-1:0;
+    if(pol)w.forEach(x=>(THK[x]||[]).forEach(k=>{themes[k]=themes[k]||{p:0,n:0};pol>0?themes[k].p++:themes[k].n++}));
+  });
+  return{t:P+N?(P-N)/(P+N):null,themes};
+}
+function analyse(r){
+  const avg=Q.reduce((s,q)=>s+r[q.k],0)/Q.length,rs=(avg-3)/2,a=analyseText(r.text);
+  const score=a.t===null?rs:0.75*rs+0.25*a.t;
+  r.an={score,label:score>=0.25?'Positive':score<=-0.25?'Negative':'Neutral',themes:a.themes};
+  return r;
+}
+const cls=l=>l==='Positive'?'p':l==='Negative'?'m':'u';
+
+/* ---------- Survey ---------- */
+function drawSurvey(done){
+  const el=$('#survey');
+  if(done){el.innerHTML='<div class="card"><h2>Thank you!</h2><p>Your feedback helps us serve you and every customer after you.</p><button class="btn" id="next">Start a new survey</button></div>';
+    $('#next').onclick=()=>{ans={};drawSurvey()};return}
+  el.innerHTML=Q.map((q,i)=>`<div class="card q"><div class="tag">Question ${i+1} of 5 · ${q.n}</div><h3>${q.q}</h3><p>${q.h}</p>
+    <div class="tiles" data-k="${q.k}">${FACE.map((f,j)=>`<button type="button" data-v="${j+1}" aria-pressed="${ans[q.k]===j+1}"><span>${f}</span>${LBL[j]}</button>`).join('')}</div></div>`).join('')+
+  `<div class="card q"><div class="tag">Question 5 of 5 · In your own words</div><h3>Is there anything else you would like to tell us?</h3><p>Optional. Tell us what we did well or what we should fix.</p>
+    <textarea id="txt" maxlength="600" aria-label="Your comments"></textarea></div>
+   <button class="btn" id="go">Submit feedback</button><p class="err" id="err" role="alert"></p>`;
+  el.querySelectorAll('.tiles').forEach(g=>g.onclick=e=>{const b=e.target.closest('button');if(!b)return;
+    ans[g.dataset.k]=+b.dataset.v;g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b))});
+  $('#go').onclick=()=>{
+    const miss=Q.filter(q=>!ans[q.k]).length;
+    if(miss){$('#err').textContent='Please answer all four rating questions ('+miss+' left).';return}
+    const r=analyse({...ans,text:$('#txt').value.trim(),ts:Date.now()});
+    data.push(r);save(data);ans={};drawSurvey(true);window.scrollTo(0,0);
+  };
+}
+
+/* ---------- Manager ---------- */
+const ACT={visit:'Review tile display layout, lighting and cleanliness, and add clear signage for each tile category.',staff:'Brief the team to greet every visitor within a minute, offer a walk-through and refresh product knowledge.',product:'Inspect stock for chips and shade variation, check popular designs are available and review the range with suppliers.',service:'Tighten sample hand-out, make quotations clear and confirm delivery timelines in writing with a follow-up call.'};
+function drawManager(){
+  const el=$('#manager'),n=data.length;
+  if(!n){el.innerHTML='<div class="card"><h2>No responses yet</h2><p class="empty">Collect feedback in the Customer survey tab, or load sample responses to preview the report.</p><button class="btn" id="demo">Load sample responses</button></div>';
+    $('#demo').onclick=demo;return}
+  const cnt={Positive:0,Neutral:0,Negative:0};data.forEach(r=>cnt[r.an.label]++);
+  const pct=k=>Math.round(cnt[k]/n*100),net=pct('Positive')-pct('Negative');
+  const avg=Q.map(q=>({...q,v:data.reduce((s,r)=>s+r[q.k],0)/n})).sort((a,b)=>a.v-b.v);
+  const col=v=>v>=4?'var(--pos)':v>=3?'var(--neu)':'var(--neg)';
+  const th={};data.forEach(r=>Object.entries(r.an.themes||{}).forEach(([k,x])=>{th[k]=th[k]||{p:0,n:0};th[k].p+=x.p;th[k].n+=x.n}));
+  const thl=Object.entries(th).sort((a,b)=>(b[1].p+b[1].n)-(a[1].p+a[1].n)),mx=Math.max(1,...thl.map(([,x])=>Math.max(x.p,x.n)));
+  const worstTheme=Object.entries(th).filter(([,x])=>x.n>x.p).sort((a,b)=>b[1].n-a[1].n)[0];
+  const ins=[];
+  const w=avg[0],b=avg[avg.length-1];
+  ins.push(`<b>Overall mood:</b> ${pct('Positive')}% positive, ${pct('Neutral')}% neutral, ${pct('Negative')}% negative across ${n} response${n>1?'s':''} (net ${net>0?'+':''}${net}).`);
+  ins.push(`<b>Strongest area:</b> ${b.n} (${b.v.toFixed(1)}/5).`);
+  ins.push(w.v<3.8?`<b>Needs attention:</b> ${w.n} (${w.v.toFixed(1)}/5). ${ACT[w.k]}`:`<b>Lowest area:</b> ${w.n} (${w.v.toFixed(1)}/5), still healthy. Keep monitoring.`);
+  if(worstTheme)ins.push(`<b>Comment theme to fix:</b> customers mention <b>${worstTheme[0].toLowerCase()}</b> negatively most often (${worstTheme[1].n} mention${worstTheme[1].n>1?'s':''}).`);
+  const low=data.filter(r=>Q.some(q=>r[q.k]<=2)).length;
+  if(low)ins.push(`<b>Follow up:</b> ${low} customer${low>1?'s':''} gave a rating of 2 or below on at least one question. Review their comments below.`);
+  if(n<10)ins.push(`<b>Note:</b> fewer than 10 responses so far. Treat trends as early signals.`);
+  const recent=[...data].reverse().slice(0,8);
+  el.innerHTML=`<div class="card"><div class="head"><h2>Customer sentiment</h2><span class="net">Net sentiment ${net>0?'+':''}${net}</span></div>
+    <div class="mosaic" aria-label="One tile per response">${[...data].reverse().map(r=>`<i class="${cls(r.an.label)}" title="${r.an.label} · score ${r.an.score.toFixed(2)}"></i>`).join('')}</div>
+    <div class="legend"><span><b class="p"></b>Positive ${cnt.Positive}</span><span><b class="u"></b>Neutral ${cnt.Neutral}</span><span><b class="m"></b>Negative ${cnt.Negative}</span><span>One tile per response, newest first</span></div></div>
+  <div class="card"><h2>What to act on</h2><ul class="ins">${ins.map(i=>'<li>'+i+'</li>').join('')}</ul></div>
+  <div class="card"><h2>Average rating by area</h2>${Q.map(q=>{const v=data.reduce((s,r)=>s+r[q.k],0)/n;return `<div class="bar"><span class="n">${q.n}</span><span class="tr"><span class="f" style="display:block;width:${v/5*100}%;background:${col(v)}"></span></span><span class="v">${v.toFixed(1)}</span></div>`}).join('')}</div>
+  <div class="card"><h2>Themes in written comments</h2>${thl.length?`<div class="th sm"><span></span><span>Positive</span><span>Negative</span></div>`+thl.map(([k,x])=>`<div class="th"><span>${k}</span><span class="c"><u class="p" style="left:0;width:${x.p/mx*100}%"></u></span><span class="c"><u class="m" style="left:0;width:${x.n/mx*100}%"></u></span></div>`).join(''):'<p class="empty">No themes detected yet. Themes appear when customers write comments.</p>'}</div>
+  <div class="card"><h2>Recent feedback</h2>${recent.map(r=>`<div class="row"><span class="pill ${cls(r.an.label)}">${r.an.label}</span><span class="sm">${new Date(r.ts).toLocaleDateString(undefined,{day:'numeric',month:'short'})} · Visit ${r.visit} · Staff ${r.staff} · Tiles ${r.product} · Service ${r.service}</span>${r.text?`<div>${esc(r.text)}</div>`:''}</div>`).join('')}</div>
+  <div class="acts"><button class="btn ghost" id="demo">Add sample responses</button><button class="btn ghost" id="clr">Clear all responses</button></div>`;
+  $('#demo').onclick=demo;
+  $('#clr').onclick=function(){if(this.dataset.s){data=[];save(data);drawManager()}else{this.dataset.s=1;this.textContent='Tap again to confirm';}};
+}
+function demo(){
+  const S=[[5,5,5,4,'Beautiful range of tiles and the staff were very helpful and polite.'],[4,5,4,4,'Great variety, quick quotation.'],[2,2,4,2,'Staff ignored us for a long time and the gallery was crowded.'],[5,4,5,5,'Loved the display, perfect finish. Will recommend.'],[3,3,3,3,''],[4,4,2,3,'Designs are nice but a few tiles were chipped in the sample.'],[2,3,3,1,'Delivery was late and nobody gave a proper update. Price was expensive.'],[5,5,4,5,'Very professional and knowledgeable team.'],[3,4,4,3,'Okay visit. Parking is not good.'],[4,3,5,4,'Excellent quality, affordable price.'],[1,2,3,2,'Confusing layout, rude salesman, very disappointed.'],[4,5,4,5,'Helpful staff and smooth billing.']];
+  S.forEach((s,i)=>data.push(analyse({visit:s[0],staff:s[1],product:s[2],service:s[3],text:s[4],ts:Date.now()-(S.length-i)*86400000/2})));
+  save(data);drawManager();
+}
+
+/* ---------- Tabs ---------- */
+function tab(m){
+  $('#t1').setAttribute('aria-selected',!m);$('#t2').setAttribute('aria-selected',m);
+  $('#survey').classList.toggle('hide',m);$('#manager').classList.toggle('hide',!m);
+  if(m){data=load();drawManager()}
+}
+$('#t1').onclick=()=>tab(false);$('#t2').onclick=()=>tab(true);
+drawSurvey();
+</script>
+</body>
+</html>
